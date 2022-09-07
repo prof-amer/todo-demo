@@ -136,7 +136,7 @@ ul {
   text-decoration: line-through #272727;
 }
 
-.task-list-item-Label {
+.task-list-item-label {
   display: flex;
   align-items: flex-start;
   color: #272727;
