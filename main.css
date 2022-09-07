@@ -135,3 +135,15 @@ ul {
   color: #272727;
   text-decoration: line-through #272727;
 }
+
+.task-list-item-Label {
+  display: flex;
+  align-items: flex-start;
+  color: #272727;
+  margin-right: 8px;
+  font-size: 14px;
+  line-height: 24px;
+  position: relative;
+  transition: 0.2s;
+  cursor: pointer;
+}
