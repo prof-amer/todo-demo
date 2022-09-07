@@ -1,26 +1,51 @@
+// initial load
+let tasks = [];
+let inputName = "";
+loadTasks();
+
 new Vue({
   el: "#tasklist",
   data: {
-    title: "to do list",
-    tasks: [
-      { name: "Today : Internal Meeting" },
-      { name: "Tomorrow : Read a Book" },
-      { name: "Daily Event Joins" },
-    ],
+    tasks,
   },
   methods: {
-    newItem: function () {
-      if (!this.tasks.name) {
+    newTask: function () {
+      if (!inputName) {
         return;
       }
-      this.tasks.push({
-        name: this.tasks.name,
-        del: "",
-      });
-      this.tasks.name = "";
+      updateTasks(inputName);
+      inputName = "";
     },
-    delItem: function (task) {
+    deleteTask: function (task) {
       this.tasks.splice(this.tasks.indexOf(task), 1);
     },
   },
 });
+
+function loadTasks() {
+  db.collection("todo-items").orderBy("date", "asc")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        tasks.push(
+          {name:doc.data().name, 
+            id: doc.id,
+          date: doc.data().date.toDate()}
+          );
+      });
+    });
+}
+
+function updateTasks(inputName) {
+  let currentTime = new Date();
+  db.collection("todo-items").add({
+    name: inputName,
+    date: currentTime
+  }).then((docRef) => {
+    tasks.push({
+      name: inputName,
+      date: currentTime,
+      id: docRef.id
+    })
+});
+}

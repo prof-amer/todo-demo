@@ -12,8 +12,18 @@
       <h1 class="app-header">To-do App Demo</h1>
 
       <div class="add-task">
-        <input type="text" class="task-input" placeholder="Add New Task" v-model="tasks.name" @keyup.enter="newItem"/>
-        <button name="addTask" type="submit" class="submit-task" @click="newItem"></button>
+        <input
+          type="text"
+          class="task-input"
+          placeholder="Add New Task"
+          v-model="inputName"
+          @keyup.enter="newTask"
+        />
+        <button
+          type="submit"
+          class="submit-task"
+          @click="newTask"
+        ></button>
       </div>
 
       <ul class="task-list">
@@ -22,14 +32,17 @@
             <input type="checkbox" />
             <span>{{task.name}}</span>
           </label>
-          <span class="delete-btn" title="Delete Task" @click="delItem(task)">{{task.del}}</span>
+          <span class="delete-btn" title="Delete Task" @click="deleteTask(task)"
+            >{{task.del}}</span
+          >
         </li>
       </ul>
     </div>
 
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js"></script>
     <script src="main.js"></script>
-  
-</body>
+  </body>
 </html>
