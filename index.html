@@ -8,27 +8,27 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div class="app-container">
+    <div class="app-container" id="tasklist">
       <h1 class="app-header">To-do App Demo</h1>
 
       <div class="add-task">
-        <input type="text" class="task-input" placeholder="Add New Task" />
-        <button name="addTask" type="submit" class="submit-task"></button>
+        <input type="text" class="task-input" placeholder="Add New Task" v-model="tasks.name" @keyup.enter="newItem"/>
+        <button name="addTask" type="submit" class="submit-task" @click="newItem"></button>
       </div>
 
       <ul class="task-list">
-        <li class="task-list-item">
+        <li class="task-list-item" v-for="task in tasks">
           <label class="task-list-item-label">
             <input type="checkbox" />
-            <span>Task</span>
+            <span>{{task.name}}</span>
           </label>
-          <span class="delete-btn" title="Delete Task"></span>
+          <span class="delete-btn" title="Delete Task" @click="delItem(task)">{{task.del}}</span>
         </li>
       </ul>
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.38/vue.cjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js"></script>
     <script src="main.js"></script>
   
 </body>
