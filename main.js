@@ -16,6 +16,7 @@ new Vue({
       if (!inputName) {
         return;
       }
+
       this.innerLoading = true;
       onError = false;
 
@@ -44,6 +45,7 @@ new Vue({
     deleteTask: function (task) {
       this.innerLoading = true;
       onError = false;
+
       db.collection("todo-items")
         .doc(task.id)
         .delete()
@@ -58,6 +60,8 @@ new Vue({
     },
     checkTask: function (isChecked, id) {
       this.innerLoading = true;
+      onError = false;
+
       const findTask = (element) => element.id == id;
       db.collection("todo-items")
         .doc(id)
@@ -65,13 +69,16 @@ new Vue({
         .then(() => {
           tasks[tasks.findIndex(findTask)].checked = isChecked;
           this.innerLoading = false;
+        })
+        .catch(() => {
+          onError = true;
+          this.innerLoading = false;
         });
     },
   },
 });
 
 function loadTasks() {
-  onError = false;
   db.collection("todo-items")
     .orderBy("date", "asc")
     .get()
