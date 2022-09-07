@@ -73,3 +73,9 @@ ul {
   cursor: pointer;
   box-shadow: 0 12px 0 var(-- add-button-shadow);
 }
+
+.add-task {
+    height: 40px;
+    font-size: 14px;
+    display: flex;
+}
