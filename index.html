@@ -13,7 +13,7 @@
       <div class="error" v-show="onError">
         <span>Action failed. Please refresh or try again later.</span>
       </div>
-      <div v-show="isLoading">
+      <div v-show="innerLoading || outerLoading">
         <div class="global-blocker"></div>
         <div class="global-loading-overlay">
           <img src="loading.gif" class="global-loading-img" />
@@ -34,7 +34,7 @@
       <ul class="task-list">
         <li class="task-list-item" v-for="task in tasks">
           <label class="task-list-item-label">
-            <input type="checkbox" />
+            <input type="checkbox" :checked="task.checked" @click="checkTask(event.target.checked, task.id)"/>
             <span>{{task.name}}</span>
           </label>
           <span class="delete-btn" title="Delete Task" @click="deleteTask(task)"
