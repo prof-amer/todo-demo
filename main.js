@@ -91,25 +91,3 @@ function loadTasks() {
       onError = true;
     });
 }
-
-function updateTasks(inputName) {
-  onError = false;
-  let currentTime = new Date();
-  db.collection("todo-items")
-    .add({
-      name: inputName,
-      date: currentTime,
-      checked: false,
-    })
-    .then((docRef) => {
-      tasks.push({
-        name: inputName,
-        date: currentTime,
-        checked: false,
-        id: docRef.id,
-      });
-    })
-    .catch(() => {
-      onError = true;
-    });
-}
