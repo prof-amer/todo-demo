@@ -2,12 +2,13 @@
 let tasks = [];
 let inputName = "";
 let onError = false;
-let isLoading = true;
+let outerLoading = true;
 loadTasks();
 
 new Vue({
   el: "#tasklist",
   data: {
+    innerLoading: false,
     tasks,
   },
   methods: {
@@ -15,11 +16,56 @@ new Vue({
       if (!inputName) {
         return;
       }
-      updateTasks(inputName);
-      inputName = "";
+      this.innerLoading = true;
+      onError = false;
+
+      let currentTime = new Date();
+      db.collection("todo-items")
+        .add({
+          name: inputName,
+          date: currentTime,
+          checked: false,
+        })
+        .then((docRef) => {
+          tasks.push({
+            name: inputName,
+            date: currentTime,
+            checked: false,
+            id: docRef.id,
+          });
+          inputName = "";
+          this.innerLoading = false;
+        })
+        .catch(() => {
+          this.innerLoading = false;
+          onError = true;
+        });
     },
     deleteTask: function (task) {
-      removeTask(task);
+      this.innerLoading = true;
+      onError = false;
+      db.collection("todo-items")
+        .doc(task.id)
+        .delete()
+        .then(() => {
+          tasks.splice(tasks.indexOf(task), 1);
+          this.innerLoading = false;
+        })
+        .catch(() => {
+          onError = true;
+          this.innerLoading = false;
+        });
+    },
+    checkTask: function (isChecked, id) {
+      this.innerLoading = true;
+      const findTask = (element) => element.id == id;
+      db.collection("todo-items")
+        .doc(id)
+        .update({ checked: isChecked })
+        .then(() => {
+          tasks[tasks.findIndex(findTask)].checked = isChecked;
+          this.innerLoading = false;
+        });
     },
   },
 });
@@ -34,13 +80,14 @@ function loadTasks() {
         tasks.push({
           name: doc.data().name,
           id: doc.id,
+          checked: doc.data().checked,
           date: doc.data().date.toDate(),
         });
       });
-      isLoading = false;
+      outerLoading = false;
     })
     .catch(() => {
-      isLoading = false;
+      outerLoading = false;
       onError = true;
     });
 }
@@ -52,25 +99,15 @@ function updateTasks(inputName) {
     .add({
       name: inputName,
       date: currentTime,
+      checked: false,
     })
     .then((docRef) => {
       tasks.push({
         name: inputName,
         date: currentTime,
+        checked: false,
         id: docRef.id,
-      });})
-    .catch(() => {
-      onError = true;
-    });
-}
-
-function removeTask(task) {
-  onError = false;
-  db.collection("todo-items")
-    .doc(task.id)
-    .delete()
-    .then(() => {
-      tasks.splice(tasks.indexOf(task), 1);
+      });
     })
     .catch(() => {
       onError = true;
