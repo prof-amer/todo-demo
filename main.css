@@ -105,3 +105,19 @@ ul {
   border-radius: 35px;
   margin-bottom: 12px;
 }
+
+.task-List-item input {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #272727;
+  background-image: url("check.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0;
+  transition: 0.2s;
+  margin-right: 8px;
+  flex-shrink: 0;
+  margin-top: 4px;
+  appearance: none;
+}
