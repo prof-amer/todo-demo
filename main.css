@@ -98,7 +98,7 @@ ul {
 }
 
 .task-list-item {
-  background-color: lightgray;
+  background-color: #d3d3d380;
   display: flex;
   align-items: center;
   padding: 8px;
