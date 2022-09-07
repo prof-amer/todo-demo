@@ -65,7 +65,7 @@ ul {
   border: none;
   background: var(-- add-button);
   color: #272727;
-  background-image: url(circle.png);
+  background-image: url('arrow-left-short.svg');
   background-size: 18px;
   background-position: center;
   background-repeat: no-repeat;
