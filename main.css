@@ -52,10 +52,24 @@ ul {
 }
 
 .app-header {
-    font-size: 20px;
-    line-height: 32px;
-    margin: 0 0 12px 0;
-    color: #272727;
+  font-size: 20px;
+  line-height: 32px;
+  margin: 0 0 12px 0;
+  color: #272727;
 }
 
-
+.submit-task {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  background: var(-- add-button);
+  color: #272727;
+  background-image: url(circle.png);
+  background-size: 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 12px 0 var(-- add-button-shadow);
+}
