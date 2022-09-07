@@ -121,3 +121,17 @@ ul {
   margin-top: 4px;
   appearance: none;
 }
+
+.task-list-item input:hover {
+  border-color: var(-- checkbox-color);
+  box-shadow: 0 0 0 3px var(-- checkbox-shadow);
+}
+.task-list-item input:checked {
+  background-size: 10px;
+  border: 1px solid var(-- checkbox-color);
+  background-color: var(-- checkbox-color);
+}
+.task-list-item input:checked + span {
+  color: #272727;
+  text-decoration: line-through #272727;
+}
