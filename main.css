@@ -51,4 +51,11 @@ ul {
   color: #222;
 }
 
+.app-header {
+    font-size: 20px;
+    line-height: 32px;
+    margin: 0 0 12px 0;
+    color: #272727;
+}
+
 
