@@ -147,3 +147,16 @@ ul {
   transition: 0.2s;
   cursor: pointer;
 }
+
+.delete-btn {
+  margin-left: auto;
+  margin-right: 5px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url(trash.svg);
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position: center;
+  cursor: pointer;
+}
