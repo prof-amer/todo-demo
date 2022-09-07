@@ -65,7 +65,7 @@ ul {
   border: none;
   background: var(-- add-button);
   color: #272727;
-  background-image: url("arrow-left-short.svg");
+  background-image: url("assets/arrow-left-short.svg");
   background-size: 18px;
   background-position: center;
   background-repeat: no-repeat;
@@ -111,7 +111,7 @@ ul {
   height: 16px;
   border-radius: 50%;
   border: 1px solid #272727;
-  background-image: url("check-lg.svg");
+  background-image: url("assets/check-lg.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 0;
@@ -154,7 +154,7 @@ ul {
   display: block;
   width: 16px;
   height: 16px;
-  background-image: url(trash.svg);
+  background-image: url("assets/trash.svg");
   background-repeat: no-repeat;
   background-size: 16px;
   background-position: center;
