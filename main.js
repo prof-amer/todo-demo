@@ -17,6 +17,7 @@ new Vue({
       inputName = "";
     },
     deleteTask: function (task) {
+      removeTask(task.id);
       this.tasks.splice(this.tasks.indexOf(task), 1);
     },
   },
@@ -48,4 +49,10 @@ function updateTasks(inputName) {
       id: docRef.id
     })
 });
+}
+
+function removeTask(id){
+  db.collection("todo-items").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!");
+})
 }
