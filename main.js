@@ -1,19 +1,43 @@
 // initial load
 let tasks = [];
-let inputName = "";
+let taskName = "";
 let onError = false;
-let outerLoading = true;
-loadTasks();
+let outerLoading = false;
+let email = "";
+let password = "";
+let uid = "";
 
 new Vue({
-  el: "#tasklist",
+  el: "#app",
   data: {
     innerLoading: false,
     tasks,
   },
   methods: {
+    registerUser: function () {
+      auth.createUserWithEmailAndPassword(email, password).then(function () {
+        // Declare user variable
+        uid = auth.currentUser.uid;
+        db.collection(uid)
+          .doc("initial-list")
+          .set({
+            name: "First Item",
+            checked: false,
+            date: new Date(),
+          })
+          .then(() => {
+            loadTasks(uid);
+          });
+      });
+    },
+    loginUser: function () {
+      auth.signInWithEmailAndPassword(email, password).then(function () {
+        uid = auth.currentUser.uid;
+        loadTasks(uid);
+      });
+    },
     newTask: function () {
-      if (!inputName) {
+      if (!taskName) {
         return;
       }
 
@@ -21,20 +45,20 @@ new Vue({
       onError = false;
 
       let currentTime = new Date();
-      db.collection("todo-items")
+      db.collection(uid)
         .add({
-          name: inputName,
+          name: taskName,
           date: currentTime,
           checked: false,
         })
         .then((docRef) => {
           tasks.push({
-            name: inputName,
+            name: taskName,
             date: currentTime,
             checked: false,
             id: docRef.id,
           });
-          inputName = "";
+          taskName = "";
           this.innerLoading = false;
         })
         .catch(() => {
@@ -46,7 +70,7 @@ new Vue({
       this.innerLoading = true;
       onError = false;
 
-      db.collection("todo-items")
+      db.collection(uid)
         .doc(task.id)
         .delete()
         .then(() => {
@@ -63,7 +87,7 @@ new Vue({
       onError = false;
 
       const findTask = (element) => element.id == id;
-      db.collection("todo-items")
+      db.collection(uid)
         .doc(id)
         .update({ checked: isChecked })
         .then(() => {
@@ -78,8 +102,8 @@ new Vue({
   },
 });
 
-function loadTasks() {
-  db.collection("todo-items")
+function loadTasks(uid) {
+  db.collection(uid)
     .orderBy("date", "asc")
     .get()
     .then((querySnapshot) => {

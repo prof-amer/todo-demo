@@ -8,43 +8,78 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div class="app-container" id="tasklist">
-      <h1 class="app-header">To-do App Demo</h1>
-      <div class="error" v-show="onError">
-        <span>Action failed. Please refresh or try again later.</span>
-      </div>
-      <div v-show="innerLoading || outerLoading">
-        <div class="global-blocker"></div>
-        <div class="global-loading-overlay">
-          <img src="loading.gif" class="global-loading-img" />
+    <div id="app" class="app-container">
+      <div class="login-content" v-show="!uid">
+        <p>Sign in / Register</p>
+        <div>
+          <label for="email">Email:</label>
+          <input
+            v-model="email"
+            type="email"
+            placeholder="Enter Email"
+          />
+          <br>
+          <label for="password">Password (6 characters minimum):</label>
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Enter Password"
+          />
+          <button type="submit" class="sign-in-button" @click="registerUser">
+            Register
+          </button>
+          <button type="submit" class="sign-in-button" @click="loginUser">
+            Sign In
+          </button>
         </div>
       </div>
 
-      <div class="add-task">
-        <input
-          type="text"
-          class="task-input"
-          placeholder="Add New Task"
-          v-model="inputName"
-          @keyup.enter="newTask"
-        />
-        <button type="submit" class="submit-task" @click="newTask"></button>
-      </div>
+      <div v-show="uid">
+        <h1 class="app-header">To-do App Demo</h1>
+        <div class="error" v-show="onError">
+          <span>Action failed. Please refresh or try again later.</span>
+        </div>
+        <div v-show="innerLoading || outerLoading">
+          <div class="global-blocker"></div>
+          <div class="global-loading-overlay">
+            <img src="loading.gif" class="global-loading-img" />
+          </div>
+        </div>
 
-      <ul class="task-list">
-        <li class="task-list-item" v-for="task in tasks">
-          <label class="task-list-item-label">
-            <input type="checkbox" :checked="task.checked" @click="checkTask(event.target.checked, task.id)"/>
-            <span>{{task.name}}</span>
-          </label>
-          <span class="delete-btn" title="Delete Task" @click="deleteTask(task)"
-            >{{task.del}}</span
-          >
-        </li>
-      </ul>
+        <div class="add-task">
+          <input
+            type="text"
+            class="task-input"
+            placeholder="Add New Task"
+            v-model="taskName"
+            @keyup.enter="newTask"
+          />
+          <button type="submit" class="submit-task" @click="newTask"></button>
+        </div>
+
+        <ul class="task-list">
+          <li class="task-list-item" v-for="task in tasks">
+            <label class="task-list-item-label">
+              <input
+                type="checkbox"
+                :checked="task.checked"
+                @click="checkTask(event.target.checked, task.id)"
+              />
+              <span>{{task.name}}</span>
+            </label>
+            <span
+              class="delete-btn"
+              title="Delete Task"
+              @click="deleteTask(task)"
+              >{{task.del}}</span
+            >
+          </li>
+        </ul>
+      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.10/vue.min.js"></script>
